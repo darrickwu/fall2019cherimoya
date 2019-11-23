@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class playermovement : MonoBehaviour
 {
+    public List<Node> waypoints;
     // Start is called before the first frame update
     void Start()
     {
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime);
+        //transform.Translate(Vector3.forward * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, )
     }
 }
