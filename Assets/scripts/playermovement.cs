@@ -33,6 +33,7 @@ public class playermovement : MonoBehaviour
                     waypointCurrent = waypoints[index];
                 }
                 else {
+                    index = 0;
                     waypointCurrent = null;
                 }
                 
