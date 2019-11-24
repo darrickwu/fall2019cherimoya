@@ -6,7 +6,7 @@ public class Pathfinding : MonoBehaviour
 {
 
     public Transform seeker, target;
-
+   // public Vector3 pt;
     Grid grid;
 
     void Awake()
@@ -16,12 +16,20 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
-        FindPath(seeker.position, target.position);
+        //if (pt != null)
+        //{
+        //    FindPath(seeker.position, pt);
+        //}
+        //else
+        //{
+        //    FindPath(seeker.position, target.position);
+        //}
+
 
     }
 
     //some actual a* stuff
-    void FindPath(Vector3 startPos, Vector3 targetPos)
+    public void FindPath(Vector3 startPos, Vector3 targetPos)
     {
         Node startNode = grid.NodeFromWorldPoint(startPos);
         Node targetNode = grid.NodeFromWorldPoint(targetPos);

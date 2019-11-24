@@ -89,7 +89,9 @@ public class Grid : MonoBehaviour{
             foreach (Node n in grid)
             {
                 Gizmos.color = (n.walkable) ? Color.white : Color.red;
-                
+                if (playerNode == n) {
+                    Gizmos.color = Color.magenta;
+                }
                 //set the path blue
                 if (path != null)
                 {

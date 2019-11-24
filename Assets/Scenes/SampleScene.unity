@@ -339,7 +339,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   gridWorldSize: {x: 49.87, y: 49.64}
-  nodeRadius: 0.5
+  nodeRadius: 0.6
 --- !u!4 &397282384
 Transform:
   m_ObjectHideFlags: 0
@@ -604,6 +604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aStaar: {fileID: 397282382}
   grid: {fileID: 0}
+  pathfinder: {fileID: 0}
 --- !u!136 &856184132
 CapsuleCollider:
   m_ObjectHideFlags: 0
