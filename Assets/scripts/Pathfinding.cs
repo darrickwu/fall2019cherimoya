@@ -94,6 +94,8 @@ public class Pathfinding : MonoBehaviour
 
         //TEST
         grid.path = path;
+
+        
         //TEST
     }
 
