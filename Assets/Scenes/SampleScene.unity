@@ -1102,7 +1102,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 856184129}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b10a1c51a2a0ce409ffac18a7352b34, type: 3}
   m_Name: 
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b10a1c51a2a0ce409ffac18a7352b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  manager: {fileID: 1561275054}
   aStaar: {fileID: 397282382}
   grid: {fileID: 0}
   pathfinder: {fileID: 0}
@@ -1436,10 +1436,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8695d05ebcf03247a02a46d2eb3d5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wait: 1
-  time: 0
   playerCanvas: {fileID: 1780438599}
   enemyCanvas: {fileID: 2073925881}
+  enemy: {fileID: 284609341}
+  player: {fileID: 856184129}
+  aStaar: {fileID: 397282382}
+  grid: {fileID: 0}
+  pathfinder: {fileID: 0}
 --- !u!4 &1561275055
 Transform:
   m_ObjectHideFlags: 0

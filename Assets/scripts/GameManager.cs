@@ -6,15 +6,27 @@ public class GameManager : MonoBehaviour
 {
 
     public static bool playerTurn = true;
-    public bool wait = false;
-    public int time = 0;
     public GameObject playerCanvas;
     public GameObject enemyCanvas;
+
+    public GameObject enemy;
+    public GameObject player;
+
+    public GameObject aStaar;
+    public Grid grid;
+    public Pathfinding pathfinder;
+
+    public List<Node> waypoints;
+    private Node waypointCurrent;
+    private int index = 0;
+    private bool moveDone = true;
+    private bool performedAction = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        grid = aStaar.GetComponent<Grid>();
+        pathfinder = aStaar.GetComponent<Pathfinding>();
     }
 
     // Update is called once per frame
@@ -25,11 +37,20 @@ public class GameManager : MonoBehaviour
         //Perform AI Action and set player turn again
         if (!get_turn())
         {
-            time += 1;
-            if(time == 300)
+            if(!performedAction)
             {
+                AI_To_Player();
+            }
+
+            if (moveDone)
+            {
+                Debug.Log("DONE");
                 set_turn(true);
-                time = 0;
+                performedAction = false;
+            }
+            else
+            {
+                AI_Move();
             }
         }
     }
@@ -46,15 +67,46 @@ public class GameManager : MonoBehaviour
 
     //Unused at the moment. Intended to simulate enemy AI
     //performing action.
-    public void AI()
+    public void AI_To_Player()
     {
-        if (wait)
+        Debug.Log("SET DESTINATION");
+        moveDone = false;
+        index = 0;
+        waypointCurrent = null;
+
+        pathfinder.FindPath(enemy.transform.position, player.transform.position);
+        waypoints = grid.path;
+        if (waypoints != null)
         {
-            playerCanvas.SetActive(false);
-            enemyCanvas.SetActive(true);
-            wait = false;
-            set_turn(true);
-            wait = true;
+            waypointCurrent = waypoints[0];
+        }
+        
+        performedAction = true;
+    }
+
+    public void AI_Move()
+    {
+        Debug.Log("MOVE");
+
+        if (waypointCurrent != null)
+        {
+            Debug.Log("waypoint not null");
+            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, waypointCurrent.worldPosition, .1f);
+            //get to the next waypoint if it is in bounds
+            if (enemy.transform.position == waypointCurrent.worldPosition)
+            {
+                index++;
+                if (index < waypoints.Count)
+                {
+                    waypointCurrent = waypoints[index];
+                }
+                else
+                {
+                    moveDone = true;
+                }
+
+
+            }
         }
     }
 }
