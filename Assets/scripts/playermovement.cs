@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class playermovement : MonoBehaviour
 {
+    public GameManager manager;
     public List<Node> waypoints;
     public GameObject aStaar;
     public Grid grid;
@@ -11,7 +12,11 @@ public class playermovement : MonoBehaviour
     private Node waypointCurrent;
     private int index = 0;
     private bool moveDone = true;
+    private bool performedAction = false;
+
     // Start is called before the first frame update
+
+
     void Start()
     {
         grid = aStaar.GetComponent<Grid>();
@@ -22,7 +27,7 @@ public class playermovement : MonoBehaviour
     void Update()
     {
         //move to the clicked location
-        if (Input.GetButtonDown("Fire1") && moveDone)
+        if (Input.GetButtonDown("Fire1") && moveDone && GameManager.get_turn())
         {
             RaycastHit hit;
 
@@ -31,8 +36,16 @@ public class playermovement : MonoBehaviour
                
                 setDestination(hit.point);
             }
-            
+
+            performedAction = true;
         }
+
+        if(performedAction && moveDone)
+        {
+            manager.set_turn(false);
+            performedAction = false;
+        }
+
         if (waypointCurrent != null)
         {
             pathfinder.seeker.transform.position = Vector3.MoveTowards(pathfinder.seeker.transform.position, waypointCurrent.worldPosition, .1f);
@@ -46,8 +59,8 @@ public class playermovement : MonoBehaviour
                 else {
                     moveDone = true;
                 }
-            
-                
+
+
             }
         }
 
