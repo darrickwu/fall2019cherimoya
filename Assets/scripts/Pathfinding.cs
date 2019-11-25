@@ -101,6 +101,7 @@ public class Pathfinding : MonoBehaviour
         path.Reverse();
 
         //TEST
+        
         grid.path = path;
 
         
