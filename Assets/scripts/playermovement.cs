@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class playermovement : MonoBehaviour
 {
-    public GameManager manager;
+    public GameManagerr manager;
     public List<Node> waypoints;
     public GameObject aStaar;
     public Grid grid;
@@ -12,19 +12,20 @@ public class playermovement : MonoBehaviour
     private Node waypointCurrent;
     private int index = 0;
     private bool moveDone = true;
-    private bool performedAction = false;
+    private bool performedAction = true;
+    public bool playerActionDone = true;
 
     private float distanceTraveled;
     private Vector3 lastPosition;
     public float maxDistance;
     public GameObject player;
-
+    private AlliedAI alliedAI;
     // Start is called before the first frame update
     void Start()
     {
         grid = aStaar.GetComponent<Grid>();
         pathfinder = aStaar.GetComponent<Pathfinding>();
-
+        alliedAI = player.GetComponent<AlliedAI>();
         lastPosition = player.transform.position;
       
     }
@@ -33,8 +34,9 @@ public class playermovement : MonoBehaviour
     void Update()
     {
         //move to the clicked location
-        if (Input.GetButtonDown("Fire1") && moveDone && GameManager.get_turn())
+        if (Input.GetButtonDown("Fire1") && moveDone && manager.get_turn() && playerActionDone)
         {
+
             RaycastHit hit;
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
@@ -43,6 +45,7 @@ public class playermovement : MonoBehaviour
                 if (hit.collider.gameObject.layer == 8) {
                     setDestination(hit.point);
                     performedAction = true;
+                    playerActionDone = false;
                 }
                 
             }
@@ -51,7 +54,9 @@ public class playermovement : MonoBehaviour
 
         if(performedAction && moveDone)
         {
-            manager.set_turn(false);
+            //shoot/ability/etc.
+            alliedAI.alliedAction();
+            //wait for manager to set turn in alliedai
             performedAction = false;
         }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManagerr : MonoBehaviour
 {
 
     public static bool playerTurn = true;
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static bool get_turn()
+    public  bool get_turn()
     {
         return playerTurn;
     }
