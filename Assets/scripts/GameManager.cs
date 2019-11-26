@@ -105,10 +105,8 @@ public class GameManager : MonoBehaviour
 
             if (distanceTraveled >= maxDistance)
             {
-                waypointCurrent = null;
-                moveDone = true;
+                index = waypoints.Count;
                 distanceTraveled = 0.0f;
-                return;
             }
 
             //get to the next waypoint if it is in bounds
@@ -121,6 +119,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    waypointCurrent = null;
                     moveDone = true;
                 }
 
