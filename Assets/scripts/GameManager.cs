@@ -22,11 +22,17 @@ public class GameManager : MonoBehaviour
     private bool moveDone = true;
     private bool performedAction = false;
 
+    private float distanceTraveled;
+    private Vector3 lastPosition;
+    public float maxDistance;
+
     // Start is called before the first frame update
     void Start()
     {
         grid = aStaar.GetComponent<Grid>();
         pathfinder = aStaar.GetComponent<Pathfinding>();
+        lastPosition = enemy.transform.position;
+
     }
 
     // Update is called once per frame
@@ -86,12 +92,25 @@ public class GameManager : MonoBehaviour
 
     public void AI_Move()
     {
-        Debug.Log("MOVE");
+        //Debug.Log("MOVE");
 
         if (waypointCurrent != null)
         {
-            Debug.Log("waypoint not null");
+            //Debug.Log("waypoint not null");
             enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, waypointCurrent.worldPosition, .1f);
+
+            distanceTraveled += Vector3.Distance(enemy.transform.position, lastPosition);
+            lastPosition = enemy.transform.position;
+
+
+            if (distanceTraveled >= maxDistance)
+            {
+                waypointCurrent = null;
+                moveDone = true;
+                distanceTraveled = 0.0f;
+                return;
+            }
+
             //get to the next waypoint if it is in bounds
             if (enemy.transform.position == waypointCurrent.worldPosition)
             {

@@ -14,11 +14,19 @@ public class playermovement : MonoBehaviour
     private bool moveDone = true;
     private bool performedAction = false;
 
+    private float distanceTraveled;
+    private Vector3 lastPosition;
+    public float maxDistance;
+    public GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
         grid = aStaar.GetComponent<Grid>();
         pathfinder = aStaar.GetComponent<Pathfinding>();
+
+        lastPosition = player.transform.position;
+      
     }
 
     // Update is called once per frame
@@ -30,12 +38,15 @@ public class playermovement : MonoBehaviour
             RaycastHit hit;
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
-            {
-               
-                setDestination(hit.point);
+            {   
+                //Debug.Log(hit.collider.gameObject.layer);
+                if (hit.collider.gameObject.layer == 8) {
+                    setDestination(hit.point);
+                    performedAction = true;
+                }
+                
             }
-
-            performedAction = true;
+            
         }
 
         if(performedAction && moveDone)
@@ -48,13 +59,28 @@ public class playermovement : MonoBehaviour
         {
             pathfinder.seeker.transform.position = Vector3.MoveTowards(pathfinder.seeker.transform.position, waypointCurrent.worldPosition, .1f);
             //get to the next waypoint if it is in bounds
+            distanceTraveled += Vector3.Distance(player.transform.position, lastPosition);
+            lastPosition = player.transform.position;
+            //Debug.Log(distanceTraveled);
+            //Debug.Log("distanceTraveled");
+
+            if (distanceTraveled >= maxDistance)
+            {
+                index = waypoints.Count;
+                distanceTraveled = 0.0f;
+            }
+
             if (pathfinder.seeker.transform.position == waypointCurrent.worldPosition) {
+                Debug.Log("THE IF");
                 index++;
                 if (index < waypoints.Count)
                 {
+                    Debug.Log(index);
+                    Debug.Log(waypoints.Count);
                     waypointCurrent = waypoints[index];
                 }
                 else {
+                    waypointCurrent = null;
                     moveDone = true;
                 }
 
@@ -68,15 +94,16 @@ public class playermovement : MonoBehaviour
 
     public void setDestination(Vector3 point)
     {
-        Debug.Log("set Destination");
+        //Debug.Log("set Destination");
         moveDone = false;
         index = 0;
         waypointCurrent = null;
 
         pathfinder.FindPath(pathfinder.seeker.position, point);
         waypoints = grid.path;
-        if (waypoints != null)
+        if (waypoints != null && waypoints.Count > 0)
         {
+            Debug.Log(waypoints.Count);
             waypointCurrent = waypoints[0];
         }
     }
