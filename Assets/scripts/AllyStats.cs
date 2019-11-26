@@ -8,4 +8,12 @@ public class AllyStats : MonoBehaviour
     public float accuracy;
     public float weaponDamage;
     public float evasion;
+
+    private void Update()
+    {
+        if (health <= 0.0f)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
