@@ -21,6 +21,8 @@ public class playermovement : MonoBehaviour
     public GameObject player;
     private AlliedAI alliedAI;
     // Start is called before the first frame update
+
+    public GameObject moveRadius;
     void Start()
     {
         grid = aStaar.GetComponent<Grid>();
@@ -33,6 +35,12 @@ public class playermovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (manager.get_turn() && playerActionDone)
+        {
+            moveRadius.SetActive(true);
+        }
+
         //move to the clicked location
         if (Input.GetButtonDown("Fire1") && moveDone && manager.get_turn() && playerActionDone)
         {
@@ -46,8 +54,9 @@ public class playermovement : MonoBehaviour
                     setDestination(hit.point);
                     performedAction = true;
                     playerActionDone = false;
+                    moveRadius.SetActive(false);
                 }
-                
+
             }
             
         }
@@ -76,12 +85,11 @@ public class playermovement : MonoBehaviour
             }
 
             if (pathfinder.seeker.transform.position == waypointCurrent.worldPosition) {
-                Debug.Log("THE IF");
                 index++;
                 if (index < waypoints.Count)
                 {
-                    Debug.Log(index);
-                    Debug.Log(waypoints.Count);
+                    //Debug.Log(index);
+                    //Debug.Log(waypoints.Count);
                     waypointCurrent = waypoints[index];
                 }
                 else {
@@ -108,7 +116,7 @@ public class playermovement : MonoBehaviour
         waypoints = grid.path;
         if (waypoints != null && waypoints.Count > 0)
         {
-            Debug.Log(waypoints.Count);
+            //Debug.Log(waypoints.Count);
             waypointCurrent = waypoints[0];
         }
     }

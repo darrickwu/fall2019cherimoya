@@ -50,13 +50,16 @@ public class GameManagerr : MonoBehaviour
 
             if (moveDone)
             {
-                Debug.Log("DONE");
+                //Debug.Log("DONE");
                 set_turn(true);
                 performedAction = false;
             }
             else
             {
-                AI_Move();
+                if(enemy != null)
+                {
+                    AI_Move();
+                }
             }
         }
     }
@@ -75,7 +78,7 @@ public class GameManagerr : MonoBehaviour
     //performing action.
     public void AI_To_Player()
     {
-        Debug.Log("SET DESTINATION");
+        //Debug.Log("SET DESTINATION");
         moveDone = false;
         index = 0;
         waypointCurrent = null;

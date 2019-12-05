@@ -31,26 +31,47 @@ public class AlliedAI : MonoBehaviour
 
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
                 {
+                    //layer 10 is an enemy and raycast from this player to the enemy also succeeds
                     if (hit.collider.gameObject.layer == 10)
                     {
-                        //rotate the player to shoot at the enemy
-                        //calculate hit chance
-                        //shoot
                         tgt = hit.collider.gameObject;
-                        enemyStats = tgt.GetComponent<AllyStats>();
-                        float hitChance = yourStats.accuracy - enemyStats.evasion;
-                        bool RNGSuccess = Random.Range(0.0f, 101.0f) <= hitChance;
-                        if (RNGSuccess) {
-                            Debug.Log("you hit the enemy for " + yourStats.weaponDamage + " damage.");
-                            enemyStats.health -= yourStats.weaponDamage;
-                            Debug.Log("enemey health is " + enemyStats.health);
+                        RaycastHit hit2;
+
+                        //another raycast from this position to the enemy to check line of sight
+                        if (Physics.Raycast(transform.position, (tgt.transform.position - transform.position), out hit2, Mathf.Infinity))
+                        {
+                            //attack code
+                            if (hit2.collider.gameObject.layer == 10)
+                            {
+                                enemyStats = tgt.GetComponent<AllyStats>();
+                                float hitChance = yourStats.accuracy - enemyStats.evasion;
+                                bool RNGSuccess = Random.Range(0.0f, 101.0f) <= hitChance;
+                                Debug.Log("hit chance is " + hitChance);
+                                if (RNGSuccess)
+                                {
+                                    Debug.Log("you hit the enemy for " + yourStats.weaponDamage + " damage.");
+                                    enemyStats.health -= yourStats.weaponDamage;
+                                    Debug.Log("enemey health is " + enemyStats.health);
+                                }
+                                manager.set_turn(false);
+                                actionTime = false;
+                                playerMove.playerActionDone = true;
+                            }
                         }
-                        manager.set_turn(false);
-                        actionTime = false;
-                        playerMove.playerActionDone = true;
+                            //rotate the player to shoot at the enemy
+                            //calculate hit chance
+                            //shoot
+                            
+                        
                     }
 
                 }
+            }
+            if (Input.GetButtonDown("Jump"))
+            {
+                manager.set_turn(false);
+                actionTime = false;
+                playerMove.playerActionDone = true;
             }
         }
     }
