@@ -11,12 +11,15 @@ public class AlliedAI : MonoBehaviour
     public GameManagerr manager;
     public GameObject logicManage;
     private playermovement playerMove;
+    public GameObject svd;
+    private PlayParticle ps;
     // Start is called before the first frame update
     void Start()
     {
         actionTime = false;
         yourStats = GetComponent<AllyStats>();
         playerMove = logicManage.GetComponent<playermovement>();
+        ps = svd.GetComponent<PlayParticle>();
     }
 
     // Update is called once per frame
@@ -43,6 +46,11 @@ public class AlliedAI : MonoBehaviour
                             //attack code
                             if (hit2.collider.gameObject.layer == 10)
                             {
+                                transform.LookAt(tgt.transform);
+                                //call particle scripts
+                                ps.playParticle();
+                                //wait after shooting
+                                
                                 enemyStats = tgt.GetComponent<AllyStats>();
                                 float hitChance = yourStats.accuracy - enemyStats.evasion;
                                 bool RNGSuccess = Random.Range(0.0f, 101.0f) <= hitChance;
@@ -53,9 +61,9 @@ public class AlliedAI : MonoBehaviour
                                     enemyStats.health -= yourStats.weaponDamage;
                                     Debug.Log("enemey health is " + enemyStats.health);
                                 }
-                                manager.set_turn(false);
+                                //prevent second shot
                                 actionTime = false;
-                                playerMove.playerActionDone = true;
+                                StartCoroutine(ExampleCoroutine());
                             }
                         }
                             //rotate the player to shoot at the enemy
@@ -78,5 +86,21 @@ public class AlliedAI : MonoBehaviour
 
     public void alliedAction() {
         actionTime = true;
+    }
+
+
+
+    IEnumerator ExampleCoroutine()
+    {
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(2);
+        //end turn
+        manager.set_turn(false);
+        //prevent second move (left click)
+        playerMove.playerActionDone = true;
+       
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 }

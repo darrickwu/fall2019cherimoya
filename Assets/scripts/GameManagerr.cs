@@ -43,7 +43,7 @@ public class GameManagerr : MonoBehaviour
         //Perform AI Action and set player turn again
         if (!get_turn())
         {
-            if(!performedAction)
+            if(!performedAction && enemy != null)
             {
                 AI_To_Player();
             }
@@ -124,6 +124,7 @@ public class GameManagerr : MonoBehaviour
                 {
                     waypointCurrent = null;
                     moveDone = true;
+                    distanceTraveled = 0.0f;
                 }
 
 

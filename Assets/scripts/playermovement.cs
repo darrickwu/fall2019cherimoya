@@ -95,6 +95,7 @@ public class playermovement : MonoBehaviour
                 else {
                     waypointCurrent = null;
                     moveDone = true;
+                    distanceTraveled = 0.0f;
                 }
 
 
