@@ -23,6 +23,7 @@ public class PlayParticle : MonoBehaviour
     {   
         if (playFlag)
         {
+            //after done shooting play the sound
             timer -= Time.deltaTime;
             if (timer <= 0.0f)
             {
@@ -41,8 +42,10 @@ public class PlayParticle : MonoBehaviour
     public void playParticle()
     {
         timer = time;
-        //Debug.Log("PLAYING");
-        ps.Play();
+        Debug.Log("PLAYING");
+        if (ps.isPlaying) ps.Stop();           
+        if (!ps.isPlaying) ps.Play();
+        //ps.Play();
         playFlag = true;
     }
 

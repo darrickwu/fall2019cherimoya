@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class AllyStats : MonoBehaviour
@@ -14,6 +15,7 @@ public class AllyStats : MonoBehaviour
         if (health <= 0.0f)
         {
             Destroy(this.gameObject);
+            SceneManager.LoadScene(sceneName: "End");
         }
     }
 }

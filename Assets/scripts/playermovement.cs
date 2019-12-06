@@ -29,7 +29,6 @@ public class playermovement : MonoBehaviour
         pathfinder = aStaar.GetComponent<Pathfinding>();
         alliedAI = player.GetComponent<AlliedAI>();
         lastPosition = player.transform.position;
-      
     }
 
     // Update is called once per frame

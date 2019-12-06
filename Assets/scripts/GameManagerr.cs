@@ -12,6 +12,9 @@ public class GameManagerr : MonoBehaviour
     public GameObject enemy;
     public GameObject player;
 
+    private AllyStats enemyStats;
+    private AllyStats playerStats;
+
     public GameObject aStaar;
     public Grid gridClass;
     public Pathfinding pathfinder;
@@ -28,13 +31,25 @@ public class GameManagerr : MonoBehaviour
     private Node[,] localGrid;
     public GameObject allCover;
     private List<GameObject> coverList;
-    // Start is called before the first frame update
+
+    private PlayParticle ps;
+    public GameObject enemyWeapon;
+
+    //DELETE THIS
+    public GameObject temporarySpot;
+
+    // Start is called before the first frame 
     void Start()
     {
         gridClass = aStaar.GetComponent<Grid>();
         pathfinder = aStaar.GetComponent<Pathfinding>();
         lastPosition = enemy.transform.position;
         localGrid = gridClass.grid;
+
+        playerStats = player.GetComponent<AllyStats>();
+        enemyStats = enemy.GetComponent<AllyStats>();
+
+        ps = enemyWeapon.GetComponent<PlayParticle>();
 
         coverList = new List<GameObject>();
 
@@ -59,6 +74,18 @@ public class GameManagerr : MonoBehaviour
             if (moveDone)
             {
                 //Debug.Log("DONE");
+                //dont shoot if low health
+                //fix this later
+                if (enemyStats.health > 10) 
+                {
+                    Debug.Log("START SHOOTING");
+                    enemy.transform.LookAt(player.transform);
+                    ps.playParticle();
+                    performedAction = true;
+                    StartCoroutine(ExampleCoroutine());
+
+                    
+                }
                 set_turn(true);
                 performedAction = false;
             }
@@ -150,22 +177,30 @@ public class GameManagerr : MonoBehaviour
 
     public void Decision_Tree()
     {
+        //check if player is visible
         RaycastHit hitPlayer;
         if (!performedAction && enemy != null && Physics.Raycast(enemy.transform.position, (player.transform.position - enemy.transform.position), out hitPlayer, Mathf.Infinity))
         {
+
+            if(enemyStats.health <= 10)
+            {
+                //flee
+                AI_To_Dest(temporarySpot);
+                
+                return;
+            }
+
             //i can see the player
             if (hitPlayer.collider.gameObject.layer == 11)
             {
-                Debug.Log("SEE PLAYER");
-                //check square of some length 
-                //check in spiral around you for first piece of cover.
+                Debug.Log("SEE PLAYER");               
                 float maxDistCover = maxDistance * .75f;
                 //loop through pieces of cover to find min
                 float minDist = Mathf.Infinity;
                 GameObject closestObj = null;
                 foreach (GameObject child in coverList)
                 {
-                    Debug.Log("FINDING COVER");
+                    //Debug.Log("FINDING COVER");
                     float dist = Vector3.Distance(child.transform.position, enemy.transform.position);
                     if (dist < minDist)
                     {
@@ -173,7 +208,7 @@ public class GameManagerr : MonoBehaviour
                         minDist = dist;
                     }
                 }
-                Debug.Log(closestObj.transform);
+                //Debug.Log(closestObj.transform);
                 //the cover must be close enough
                 if (closestObj != null && minDist <= maxDistance)
                 {
@@ -198,7 +233,10 @@ public class GameManagerr : MonoBehaviour
                 else
                 {
                     Debug.Log("START SHOOTING");
-                    AI_To_Dest(enemy);
+                    enemy.transform.LookAt(player.transform);
+                    ps.playParticle();
+                    performedAction = true;
+                    StartCoroutine(ExampleCoroutine());
                     //no cover found, start shooting
                 }
                 //Check for cover
@@ -217,5 +255,15 @@ public class GameManagerr : MonoBehaviour
 
         }
 
+    }
+
+    IEnumerator ExampleCoroutine()
+    {
+        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(2);
+        //end turn
+        set_turn(true);
+        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 }
