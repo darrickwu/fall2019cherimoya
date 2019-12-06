@@ -95,7 +95,8 @@ public class GameManagerr : MonoBehaviour
         waypoints = gridClass.path;
         if (waypoints != null)
         {
-            waypointCurrent = waypoints[0];
+            if(waypoints.Count > 0)
+                waypointCurrent = waypoints[0];
         }
         
         performedAction = true;
@@ -138,6 +139,12 @@ public class GameManagerr : MonoBehaviour
 
 
             }
+        }
+        else
+        {
+            waypointCurrent = null;
+            moveDone = true;
+            distanceTraveled = 0.0f;
         }
     }
 
@@ -191,6 +198,7 @@ public class GameManagerr : MonoBehaviour
                 else
                 {
                     Debug.Log("START SHOOTING");
+                    AI_To_Dest(enemy);
                     //no cover found, start shooting
                 }
                 //Check for cover
