@@ -12,8 +12,8 @@ public class GameManagerr : MonoBehaviour
     public GameObject enemy;
     public GameObject player;
 
-    private AllyStats enemyStats;
-    private AllyStats playerStats;
+    private UnitStats enemyStats;
+    private UnitStats playerStats;
 
     public GameObject aStaar;
     public Grid gridClass;
@@ -46,8 +46,8 @@ public class GameManagerr : MonoBehaviour
         lastPosition = enemy.transform.position;
         localGrid = gridClass.grid;
 
-        playerStats = player.GetComponent<AllyStats>();
-        enemyStats = enemy.GetComponent<AllyStats>();
+        playerStats = player.GetComponent<UnitStats>();
+        enemyStats = enemy.GetComponent<UnitStats>();
 
         ps = enemyWeapon.GetComponent<PlayParticle>();
 

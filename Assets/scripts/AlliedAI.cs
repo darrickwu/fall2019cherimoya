@@ -6,8 +6,8 @@ public class AlliedAI : MonoBehaviour
 {
     private bool actionTime;
     private GameObject tgt;
-    private AllyStats yourStats;
-    private AllyStats enemyStats;
+    private UnitStats yourStats;
+    private UnitStats enemyStats;
     public GameManagerr manager;
     public GameObject logicManage;
     private playermovement playerMove;
@@ -17,7 +17,7 @@ public class AlliedAI : MonoBehaviour
     void Start()
     {
         actionTime = false;
-        yourStats = GetComponent<AllyStats>();
+        yourStats = GetComponent<UnitStats>();
         playerMove = logicManage.GetComponent<playermovement>();
         ps = svd.GetComponent<PlayParticle>();
     }
@@ -51,14 +51,14 @@ public class AlliedAI : MonoBehaviour
                                 ps.playParticle();
                                 //wait after shooting
                                 
-                                enemyStats = tgt.GetComponent<AllyStats>();
+                                enemyStats = tgt.GetComponent<UnitStats>();
                                 float hitChance = yourStats.accuracy - enemyStats.evasion;
                                 bool RNGSuccess = Random.Range(0.0f, 101.0f) <= hitChance;
                                 Debug.Log("hit chance is " + hitChance);
                                 if (RNGSuccess)
                                 {
                                     Debug.Log("you hit the enemy for " + yourStats.weaponDamage + " damage.");
-                                    enemyStats.health -= yourStats.weaponDamage;
+                                    enemyStats.takeDamage(yourStats.weaponDamage);
                                     Debug.Log("enemey health is " + enemyStats.health);
                                 }
                                 //prevent second shot
