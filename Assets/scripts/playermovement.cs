@@ -57,6 +57,7 @@ public class playermovement : MonoBehaviour
             }
 
             player = UNITS.transform.GetChild(currentUnit).gameObject;
+            lastPosition = player.transform.position;
             moveRadius = UNITS.transform.GetChild(currentUnit).GetChild(0).gameObject;
             player.transform.GetChild(0).gameObject.SetActive(true);
             player.transform.GetChild(1).gameObject.SetActive(true);
@@ -79,6 +80,7 @@ public class playermovement : MonoBehaviour
             }
 
             player = UNITS.transform.GetChild(currentUnit).gameObject;
+            lastPosition = player.transform.position;
             moveRadius = UNITS.transform.GetChild(currentUnit).GetChild(0).gameObject;
             player.transform.GetChild(0).gameObject.SetActive(true);
             player.transform.GetChild(1).gameObject.SetActive(true);
@@ -93,6 +95,7 @@ public class playermovement : MonoBehaviour
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
             {
+                //walkable layer
                 //Debug.Log(hit.collider.gameObject.layer);
                 if (hit.collider.gameObject.layer == 8)
                 {
@@ -100,6 +103,9 @@ public class playermovement : MonoBehaviour
                     performedAction = true;
                     playerActionDone = false;
                     moveRadius.SetActive(false);
+                    Debug.Log(distanceTraveled);
+
+                    distanceTraveled = 0.0f;
                 }
 
             }
@@ -114,17 +120,17 @@ public class playermovement : MonoBehaviour
             performedAction = false;
         }
 
+        //actually move the unit
         if (waypointCurrent != null)
         {
             pathfinder.seeker.transform.position = Vector3.MoveTowards(pathfinder.seeker.transform.position, waypointCurrent.worldPosition, .1f);
             //get to the next waypoint if it is in bounds
             distanceTraveled += Vector3.Distance(player.transform.position, lastPosition);
             lastPosition = player.transform.position;
-            //Debug.Log(distanceTraveled);
-            //Debug.Log("distanceTraveled");
 
             if (distanceTraveled >= maxDistance)
             {
+                Debug.Log(distanceTraveled);
                 index = waypoints.Count;
                 distanceTraveled = 0.0f;
             }

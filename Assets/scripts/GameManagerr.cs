@@ -239,13 +239,7 @@ public class GameManagerr : MonoBehaviour
                     StartCoroutine(ExampleCoroutine());
                     //no cover found, start shooting
                 }
-                //Check for cover
-                //if(cover found within distance){
-                //move to cover and shoot
-                //}
-                //else{
-                //shoot
-                //}
+         
             }
             //i cannot see the player so i move towards players location
             else
