@@ -78,7 +78,7 @@ public class GameManagerr : MonoBehaviour
                 //fix this later
                 if (enemyStats.health > 10) 
                 {
-                    Debug.Log("START SHOOTING");
+                    //Debug.Log("START SHOOTING");
                     enemy.transform.LookAt(player.transform);
                     ps.playParticle();
                     performedAction = true;
@@ -193,7 +193,7 @@ public class GameManagerr : MonoBehaviour
             //i can see the player
             if (hitPlayer.collider.gameObject.layer == 11)
             {
-                Debug.Log("SEE PLAYER");               
+                //Debug.Log("SEE PLAYER");               
                 float maxDistCover = maxDistance * .75f;
                 //loop through pieces of cover to find min
                 float minDist = Mathf.Infinity;
@@ -212,7 +212,7 @@ public class GameManagerr : MonoBehaviour
                 //the cover must be close enough
                 if (closestObj != null && minDist <= maxDistance)
                 {
-                    Debug.Log("FINDING HOTSPOT");
+                    //Debug.Log("FINDING HOTSPOT");
                     //pass in the "ideal" cover hotspot(furthest from the player)
                     Transform child0 = closestObj.transform.GetChild(0);
                     Transform child1 = closestObj.transform.GetChild(1);
@@ -226,13 +226,13 @@ public class GameManagerr : MonoBehaviour
                         closestObj = child1.gameObject;
                     }
 
-                    Debug.Log("MOVING");
-                    Debug.Log(closestObj.transform);
+                    //Debug.Log("MOVING");
+                    //Debug.Log(closestObj.transform);
                     AI_To_Dest(closestObj);
                 }
                 else
                 {
-                    Debug.Log("START SHOOTING");
+                    //Debug.Log("START SHOOTING");
                     enemy.transform.LookAt(player.transform);
                     ps.playParticle();
                     performedAction = true;
@@ -259,11 +259,11 @@ public class GameManagerr : MonoBehaviour
 
     IEnumerator ExampleCoroutine()
     {
-        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        //Debug.Log("Started Coroutine at timestamp : " + Time.time);
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(2);
         //end turn
         set_turn(true);
-        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 }

@@ -970,7 +970,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad329d4e21f7fe46888200fe5c5c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.1
   gunshot: {fileID: 141486078}
   manager: {fileID: 1561275054}
   ps: {fileID: 1884523373}
@@ -2446,7 +2445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad329d4e21f7fe46888200fe5c5c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.1
   gunshot: {fileID: 559627385}
   manager: {fileID: 1561275054}
   ps: {fileID: 990656750}
@@ -3083,7 +3081,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad329d4e21f7fe46888200fe5c5c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.1
   gunshot: {fileID: 724266118}
   manager: {fileID: 1561275054}
   ps: {fileID: 1774044009}
@@ -3196,7 +3193,6 @@ GameObject:
   - component: {fileID: 767781216}
   - component: {fileID: 767781215}
   - component: {fileID: 767781214}
-  - component: {fileID: 767781213}
   - component: {fileID: 767781212}
   m_Layer: 11
   m_Name: Player (2)
@@ -3242,21 +3238,6 @@ MonoBehaviour:
   evasion: 0
   healthBar: {fileID: 1452948212}
   enemyUI: {fileID: 2051471656}
---- !u!114 &767781213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 767781210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7674de9fe1d4648b9ccba01a3a4a19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 1561275054}
-  logicManage: {fileID: 1157570448}
-  svd: {fileID: 141486075}
 --- !u!143 &767781214
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3767,7 +3748,6 @@ GameObject:
   - component: {fileID: 856184133}
   - component: {fileID: 856184132}
   - component: {fileID: 856184130}
-  - component: {fileID: 856184136}
   - component: {fileID: 856184131}
   m_Layer: 11
   m_Name: Player
@@ -3891,21 +3871,6 @@ Transform:
   m_Father: {fileID: 1057862048}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
---- !u!114 &856184136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 856184129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7674de9fe1d4648b9ccba01a3a4a19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 1561275054}
-  logicManage: {fileID: 1157570448}
-  svd: {fileID: 724266115}
 --- !u!1 &861769160
 GameObject:
   m_ObjectHideFlags: 0
@@ -4013,7 +3978,6 @@ GameObject:
   - component: {fileID: 872264429}
   - component: {fileID: 872264428}
   - component: {fileID: 872264427}
-  - component: {fileID: 872264426}
   - component: {fileID: 872264425}
   m_Layer: 11
   m_Name: Player (1)
@@ -4059,21 +4023,6 @@ MonoBehaviour:
   evasion: 0
   healthBar: {fileID: 555528862}
   enemyUI: {fileID: 2125611895}
---- !u!114 &872264426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872264423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7674de9fe1d4648b9ccba01a3a4a19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 1561275054}
-  logicManage: {fileID: 1157570448}
-  svd: {fileID: 1500407773}
 --- !u!143 &872264427
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4298,7 +4247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad329d4e21f7fe46888200fe5c5c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.1
   gunshot: {fileID: 916929458}
   manager: {fileID: 1561275054}
   ps: {fileID: 67026846}
@@ -4958,6 +4906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1057862048}
+  - component: {fileID: 1057862049}
   m_Layer: 0
   m_Name: Units
   m_TagString: Untagged
@@ -4984,6 +4933,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 22.815, z: 0}
+--- !u!114 &1057862049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057862047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7674de9fe1d4648b9ccba01a3a4a19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 1561275054}
+  logicManage: {fileID: 1157570448}
+  svd: {fileID: 724266115}
 --- !u!1001 &1058308129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5202,7 +5166,6 @@ GameObject:
   - component: {fileID: 1082760905}
   - component: {fileID: 1082760904}
   - component: {fileID: 1082760903}
-  - component: {fileID: 1082760902}
   - component: {fileID: 1082760901}
   m_Layer: 11
   m_Name: Player (4)
@@ -5248,21 +5211,6 @@ MonoBehaviour:
   evasion: 0
   healthBar: {fileID: 985444771}
   enemyUI: {fileID: 1819716845}
---- !u!114 &1082760902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1082760899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7674de9fe1d4648b9ccba01a3a4a19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 1561275054}
-  logicManage: {fileID: 1157570448}
-  svd: {fileID: 559627382}
 --- !u!143 &1082760903
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6374,7 +6322,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad329d4e21f7fe46888200fe5c5c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.1
   gunshot: {fileID: 1500407776}
   manager: {fileID: 1561275054}
   ps: {fileID: 689911689}
@@ -7373,7 +7320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad329d4e21f7fe46888200fe5c5c865, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0.11
   gunshot: {fileID: 1786438382}
   manager: {fileID: 1561275054}
   ps: {fileID: 982483878}
@@ -7675,7 +7621,6 @@ GameObject:
   - component: {fileID: 1881137405}
   - component: {fileID: 1881137404}
   - component: {fileID: 1881137403}
-  - component: {fileID: 1881137402}
   - component: {fileID: 1881137401}
   m_Layer: 11
   m_Name: Player (3)
@@ -7721,21 +7666,6 @@ MonoBehaviour:
   evasion: 0
   healthBar: {fileID: 106171466}
   enemyUI: {fileID: 509460451}
---- !u!114 &1881137402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1881137399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7674de9fe1d4648b9ccba01a3a4a19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 1561275054}
-  logicManage: {fileID: 1157570448}
-  svd: {fileID: 916929455}
 --- !u!143 &1881137403
 CharacterController:
   m_ObjectHideFlags: 0

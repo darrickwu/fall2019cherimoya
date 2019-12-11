@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayParticle : MonoBehaviour
 {
 
-    public float time;
+    private float time;
     public AudioSource gunshot;
     private float timer;
     private bool playFlag = false;
@@ -16,6 +16,7 @@ public class PlayParticle : MonoBehaviour
 
     void Start()
     {
+        time = 0.2f;
         timer = time;
     }
 
@@ -42,7 +43,7 @@ public class PlayParticle : MonoBehaviour
     public void playParticle()
     {
         timer = time;
-        Debug.Log("PLAYING");
+        //Debug.Log("PLAYING");
         if (ps.isPlaying) ps.Stop();           
         if (!ps.isPlaying) ps.Play();
         //ps.Play();

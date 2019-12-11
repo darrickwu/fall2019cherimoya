@@ -13,19 +13,65 @@ public class AlliedAI : MonoBehaviour
     private playermovement playerMove;
     public GameObject svd;
     private PlayParticle ps;
+    private GameObject unit;
+
+    private GameObject UNITS;
+    private int currentUnit = 0;
+
     // Start is called before the first frame update
     void Start()
     {
+        UNITS = this.transform.gameObject;
         actionTime = false;
-        yourStats = GetComponent<UnitStats>();
+        yourStats = transform.GetChild(0).gameObject.GetComponent<UnitStats>();
         playerMove = logicManage.GetComponent<playermovement>();
         ps = svd.GetComponent<PlayParticle>();
+        unit = UNITS.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButtonDown("next"))
+        {
+            if (currentUnit == UNITS.transform.childCount - 1)
+            {
+                currentUnit = 0;
+            }
+            else
+            {
+                currentUnit++;
+            }
+
+            unit = UNITS.transform.GetChild(currentUnit).gameObject;
+            yourStats = unit.GetComponent<UnitStats>();
+            svd = unit.transform.GetChild(2).gameObject;
+            ps = svd.GetComponent<PlayParticle>();
+            return;
+        }
+
+
+        if (Input.GetButtonDown("prev"))
+        {
+
+            if (currentUnit == 0)
+            {
+                currentUnit = UNITS.transform.childCount - 1;
+            }
+            else
+            {
+                currentUnit--;
+            }
+
+            unit = UNITS.transform.GetChild(currentUnit).gameObject;
+            svd = unit.transform.GetChild(2).gameObject;
+            ps = svd.GetComponent<PlayParticle>();
+            return;
+        }
+
+
         //right click to shoot at target
+
         if (actionTime) {
             if (Input.GetButtonDown("Fire2"))
             {
@@ -41,25 +87,26 @@ public class AlliedAI : MonoBehaviour
                         RaycastHit hit2;
 
                         //another raycast from this position to the enemy to check line of sight
-                        if (Physics.Raycast(transform.position, (tgt.transform.position - transform.position), out hit2, Mathf.Infinity))
+                        if (Physics.Raycast(unit.transform.position, (tgt.transform.position - unit.transform.position), out hit2, Mathf.Infinity))
                         {
                             //attack code
                             if (hit2.collider.gameObject.layer == 10)
                             {
-                                transform.LookAt(tgt.transform);
+                                unit.transform.LookAt(tgt.transform);
                                 //call particle scripts
+                                //Debug.Log(ps);
                                 ps.playParticle();
                                 //wait after shooting
                                 
                                 enemyStats = tgt.GetComponent<UnitStats>();
                                 float hitChance = yourStats.accuracy - enemyStats.evasion;
                                 bool RNGSuccess = Random.Range(0.0f, 101.0f) <= hitChance;
-                                Debug.Log("hit chance is " + hitChance);
+                                //Debug.Log("hit chance is " + hitChance);
                                 if (RNGSuccess)
                                 {
-                                    Debug.Log("you hit the enemy for " + yourStats.weaponDamage + " damage.");
+                                   // Debug.Log("you hit the enemy for " + yourStats.weaponDamage + " damage.");
                                     enemyStats.takeDamage(yourStats.weaponDamage);
-                                    Debug.Log("enemey health is " + enemyStats.health);
+                                    //Debug.Log("enemey health is " + enemyStats.health);
                                 }
                                 //prevent second shot
                                 actionTime = false;
@@ -89,10 +136,9 @@ public class AlliedAI : MonoBehaviour
     }
 
 
-
     IEnumerator ExampleCoroutine()
     {
-        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        //Debug.Log("Started Coroutine at timestamp : " + Time.time);
 
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(2);
@@ -101,6 +147,6 @@ public class AlliedAI : MonoBehaviour
         //prevent second move (left click)
         playerMove.playerActionDone = true;
        
-        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 }

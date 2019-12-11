@@ -29,7 +29,7 @@ public class playermovement : MonoBehaviour
     {
         grid = aStaar.GetComponent<Grid>();
         pathfinder = aStaar.GetComponent<Pathfinding>();
-        alliedAI = player.GetComponent<AlliedAI>();
+        alliedAI = UNITS.GetComponent<AlliedAI>();
         lastPosition = player.transform.position;
     }
 
