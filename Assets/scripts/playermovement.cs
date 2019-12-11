@@ -18,10 +18,12 @@ public class playermovement : MonoBehaviour
     private float distanceTraveled;
     private Vector3 lastPosition;
     public float maxDistance;
+
+    public GameObject UNITS;
+    private int currentUnit = 0;
     public GameObject player;
     private AlliedAI alliedAI;
     // Start is called before the first frame update
-
     public GameObject moveRadius;
     void Start()
     {
@@ -40,6 +42,49 @@ public class playermovement : MonoBehaviour
             moveRadius.SetActive(true);
         }
 
+        if (Input.GetButtonDown("next") && moveDone && manager.get_turn() && playerActionDone)
+        {
+            player.transform.GetChild(0).gameObject.SetActive(false);
+            player.transform.GetChild(1).gameObject.SetActive(false);
+
+            if (currentUnit == UNITS.transform.childCount - 1)
+            {
+                currentUnit = 0;
+            }
+            else
+            {
+                currentUnit++;
+            }
+
+            player = UNITS.transform.GetChild(currentUnit).gameObject;
+            moveRadius = UNITS.transform.GetChild(currentUnit).GetChild(0).gameObject;
+            player.transform.GetChild(0).gameObject.SetActive(true);
+            player.transform.GetChild(1).gameObject.SetActive(true);
+            return;
+        }
+
+
+        if (Input.GetButtonDown("prev") && moveDone && manager.get_turn() && playerActionDone)
+        {
+            player.transform.GetChild(0).gameObject.SetActive(false);
+            player.transform.GetChild(1).gameObject.SetActive(false);
+
+            if (currentUnit == 0)
+            {
+                currentUnit = UNITS.transform.childCount - 1;
+            }
+            else
+            {
+                currentUnit--;
+            }
+
+            player = UNITS.transform.GetChild(currentUnit).gameObject;
+            moveRadius = UNITS.transform.GetChild(currentUnit).GetChild(0).gameObject;
+            player.transform.GetChild(0).gameObject.SetActive(true);
+            player.transform.GetChild(1).gameObject.SetActive(true);
+            return;
+        }
+
         //move to the clicked location
         if (Input.GetButtonDown("Fire1") && moveDone && manager.get_turn() && playerActionDone)
         {
@@ -47,9 +92,10 @@ public class playermovement : MonoBehaviour
             RaycastHit hit;
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
-            {   
+            {
                 //Debug.Log(hit.collider.gameObject.layer);
-                if (hit.collider.gameObject.layer == 8) {
+                if (hit.collider.gameObject.layer == 8)
+                {
                     setDestination(hit.point);
                     performedAction = true;
                     playerActionDone = false;
@@ -57,10 +103,10 @@ public class playermovement : MonoBehaviour
                 }
 
             }
-            
+
         }
 
-        if(performedAction && moveDone)
+        if (performedAction && moveDone)
         {
             //shoot/ability/etc.
             alliedAI.alliedAction();
@@ -83,7 +129,8 @@ public class playermovement : MonoBehaviour
                 distanceTraveled = 0.0f;
             }
 
-            if (pathfinder.seeker.transform.position == waypointCurrent.worldPosition) {
+            if (pathfinder.seeker.transform.position == waypointCurrent.worldPosition)
+            {
                 index++;
                 if (index < waypoints.Count)
                 {
@@ -91,7 +138,8 @@ public class playermovement : MonoBehaviour
                     //Debug.Log(waypoints.Count);
                     waypointCurrent = waypoints[index];
                 }
-                else {
+                else
+                {
                     waypointCurrent = null;
                     moveDone = true;
                     distanceTraveled = 0.0f;

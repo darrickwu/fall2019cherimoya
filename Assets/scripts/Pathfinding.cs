@@ -8,6 +8,8 @@ public class Pathfinding : MonoBehaviour
     public Transform seeker, target;
    // public Vector3 pt;
     Grid grid;
+    public GameObject UNITS;
+    private int currentUnit = 0;
 
     void Awake()
     {
@@ -16,14 +18,35 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
-        //if (pt != null)
-        //{
-        //    FindPath(seeker.position, pt);
-        //}
-        //else
-        //{
-        //    FindPath(seeker.position, target.position);
-        //}
+        if (Input.GetButtonDown("next"))
+        {
+            if (currentUnit == UNITS.transform.childCount - 1)
+            {
+                currentUnit = 0;
+            }
+            else
+            {
+                currentUnit++;
+            }
+
+            seeker = UNITS.transform.GetChild(currentUnit);
+        }
+
+
+        if (Input.GetButtonDown("prev"))
+        {
+
+            if (currentUnit == 0)
+            {
+                currentUnit = UNITS.transform.childCount - 1;
+            }
+            else
+            {
+                currentUnit--;
+            }
+
+            seeker = UNITS.transform.GetChild(currentUnit);
+        }
 
 
     }
