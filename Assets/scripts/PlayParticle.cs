@@ -16,7 +16,7 @@ public class PlayParticle : MonoBehaviour
 
     void Start()
     {
-        time = 0.2f;
+        time = 0.15f;
         timer = time;
     }
 

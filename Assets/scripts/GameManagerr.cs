@@ -37,6 +37,13 @@ public class GameManagerr : MonoBehaviour
 
     //DELETE THIS
     public GameObject temporarySpot;
+    //
+
+    //ENEMY UNITS
+    public GameObject allEnemyUnits;
+    private List<GameObject> enemyUnits;
+    private Random rand = new Random();
+
 
     // Start is called before the first frame 
     void Start()
@@ -47,11 +54,20 @@ public class GameManagerr : MonoBehaviour
         localGrid = gridClass.grid;
 
         playerStats = player.GetComponent<UnitStats>();
-        enemyStats = enemy.GetComponent<UnitStats>();
 
+
+        enemyStats = enemy.GetComponent<UnitStats>();
         ps = enemyWeapon.GetComponent<PlayParticle>();
 
         coverList = new List<GameObject>();
+        enemyUnits = new List<GameObject>();
+
+
+        for(int i = 0; i < allEnemyUnits.transform.childCount; i++)
+        {
+            enemyUnits.Add(allEnemyUnits.transform.GetChild(i).gameObject);
+        }
+
 
         for(int i = 0; i < allCover.transform.childCount; i++)
         {
@@ -84,7 +100,6 @@ public class GameManagerr : MonoBehaviour
                     performedAction = true;
                     StartCoroutine(ExampleCoroutine());
 
-                    
                 }
                 set_turn(true);
                 performedAction = false;
@@ -181,8 +196,11 @@ public class GameManagerr : MonoBehaviour
         RaycastHit hitPlayer;
         if (!performedAction && enemy != null && Physics.Raycast(enemy.transform.position, (player.transform.position - enemy.transform.position), out hitPlayer, Mathf.Infinity))
         {
+            enemy = enemyUnits.ToArray()[Random.Range(0, 8)];
+            enemyWeapon = enemy.transform.GetChild(0).gameObject;
+            ps = enemyWeapon.GetComponent<PlayParticle>();
 
-            if(enemyStats.health <= 10)
+            if (enemyStats.health <= 10)
             {
                 //flee
                 AI_To_Dest(temporarySpot);
