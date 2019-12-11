@@ -64,6 +64,7 @@ public class AlliedAI : MonoBehaviour
             }
 
             unit = UNITS.transform.GetChild(currentUnit).gameObject;
+            yourStats = unit.GetComponent<UnitStats>();
             svd = unit.transform.GetChild(2).gameObject;
             ps = svd.GetComponent<PlayParticle>();
             return;
