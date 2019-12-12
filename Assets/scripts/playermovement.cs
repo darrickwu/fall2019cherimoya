@@ -46,7 +46,7 @@ public class playermovement : MonoBehaviour
 
         if ((Input.GetButtonDown("next") && moveDone && manager.get_turn() && playerActionDone) || (manager.switchChar))
         {
-            // print("CHANGING MOVEMENT");
+            print("CHANGING MOVEMENT");
 
             player.transform.GetChild(0).gameObject.SetActive(false);
             player.transform.GetChild(1).gameObject.SetActive(false);
@@ -76,7 +76,7 @@ public class playermovement : MonoBehaviour
 
         if (Input.GetButtonDown("prev") && moveDone && manager.get_turn() && playerActionDone)
         {
-            //print("CHANGING MOVEMENT");
+            print("CHANGING MOVEMENT");
 
             player.transform.GetChild(0).gameObject.SetActive(false);
             player.transform.GetChild(1).gameObject.SetActive(false);

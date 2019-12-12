@@ -27,9 +27,9 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetButtonDown("next") && !findingPath && moveDone && !actionTime) || (manager.switchAction))
+        if ((Input.GetButtonDown("next") && !findingPath && moveDone && !actionTime && manager.get_turn()) || (manager.switchAction))
         {
-            //print("CHANGING PATH");
+            print("CHANGING PATH");
 
             if (currentUnit == UNITS.transform.childCount - 1)
             {
@@ -50,9 +50,9 @@ public class Pathfinding : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("prev") && !findingPath && moveDone && !actionTime)
+        if (Input.GetButtonDown("prev") && !findingPath && moveDone && !actionTime && manager.get_turn())
         {
-            //print("CHANGING PATH");
+            print("CHANGING PATH");
 
             if (currentUnit == 0)
             {

@@ -37,7 +37,7 @@ public class AlliedAI : MonoBehaviour
     {
         if ((Input.GetButtonDown("next") && !actionTime && moveDone && manager.get_turn()) || (manager.switchAlly))
         {
-            //print("CHANGING ACTION");
+            print("CHANGING ACTION");
             if (currentUnit == UNITS.transform.childCount - 1)
             {
                 currentUnit = 0;
@@ -62,7 +62,7 @@ public class AlliedAI : MonoBehaviour
 
         if (Input.GetButtonDown("prev") && !actionTime && moveDone && manager.get_turn())
         {
-            //print("CHANGING ACTION");
+            print("CHANGING ACTION");
 
             if (currentUnit == 0)
             {
