@@ -193,12 +193,17 @@ public class GameManagerr : MonoBehaviour
     public void Decision_Tree()
     {
         //check if player is visible
+        if (!performedAction)
+        {
+            enemy = enemyUnits[Random.Range(0, enemyUnits.Count)];
+            lastPosition = enemy.transform.position;
+            enemyWeapon = enemy.transform.GetChild(0).gameObject;
+            ps = enemyWeapon.GetComponent<PlayParticle>();
+        }
+
         RaycastHit hitPlayer;
         if (!performedAction && enemy != null && Physics.Raycast(enemy.transform.position, (player.transform.position - enemy.transform.position), out hitPlayer, Mathf.Infinity))
         {
-            enemy = enemyUnits[Random.Range(0, enemyUnits.Count)];
-            enemyWeapon = enemy.transform.GetChild(0).gameObject;
-            ps = enemyWeapon.GetComponent<PlayParticle>();
 
             if (enemyStats.health <= 10)
             {
