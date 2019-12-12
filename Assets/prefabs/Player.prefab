@@ -581,7 +581,7 @@ MonoBehaviour:
   maxHealth: 50
   health: 50
   accuracy: 75
-  weaponDamage: 10
+  weaponDamage: 40
   evasion: 10
   isEnemy: 0
   manager: {fileID: 0}
@@ -594,34 +594,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3129753658514151387}
     m_Modifications:
-    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: lengthInSec
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 0.005
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: simulationSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
-      propertyPath: autoRandomSeed
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
       propertyPath: m_Name
       value: WFX_MF 4P RIFLE1
@@ -685,6 +657,34 @@ PrefabInstance:
     - target: {fileID: 400006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.7692312
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: lengthInSec
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: simulationSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: c888f0c922d622147bbdbe2ca794142b, type: 3}
       propertyPath: m_Layer

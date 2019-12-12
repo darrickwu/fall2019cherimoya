@@ -8,6 +8,7 @@ public class AlliedAI : MonoBehaviour
     private GameObject tgt;
     private UnitStats yourStats;
     private UnitStats enemyStats;
+    public GameObject missed;
     public GameManagerr manager;
     public GameObject logicManage;
     private playermovement playerMove;
@@ -30,6 +31,7 @@ public class AlliedAI : MonoBehaviour
         ps = svd.GetComponent<PlayParticle>();
         unit = UNITS.transform.GetChild(0).gameObject;
         moveDone = true;
+        missed.SetActive(false);
     }
 
     // Update is called once per frame
@@ -120,6 +122,10 @@ public class AlliedAI : MonoBehaviour
                                     enemyStats.takeDamage(yourStats.weaponDamage);
                                     //Debug.Log("enemey health is " + enemyStats.health);
                                 }
+                                else
+                                {
+                                    missed.SetActive(true);
+                                }
                                 //prevent second shot
                                 actionTime = false;
                                 StartCoroutine(ExampleCoroutine());
@@ -146,6 +152,7 @@ public class AlliedAI : MonoBehaviour
     {
         actionTime = true;
         moveDone = true;
+        missed.SetActive(false);
     }
 
     public void setMove()

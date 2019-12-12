@@ -9,6 +9,7 @@ public class GameManagerr : MonoBehaviour
     public static bool playerTurn = true;
     public GameObject playerCanvas;
     public GameObject enemyCanvas;
+   
 
     public GameObject enemy;
     public GameObject player;

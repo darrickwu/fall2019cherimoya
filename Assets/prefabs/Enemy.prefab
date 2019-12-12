@@ -389,7 +389,7 @@ MonoBehaviour:
   health: 50
   accuracy: 60
   weaponDamage: 9
-  evasion: 10
+  evasion: 0
   isEnemy: 1
   manager: {fileID: 0}
   healthBar: {fileID: 8051931960547040194}
