@@ -40,9 +40,13 @@ public class Pathfinding : MonoBehaviour
                 currentUnit++;
             }
 
-            seeker = UNITS.transform.GetChild(currentUnit);
+            if (UNITS.transform.childCount > 0)
+            {
+                seeker = UNITS.transform.GetChild(currentUnit);
+
+            }
             manager.switchAction = false;
-            manager.switchDestroy();
+            manager.switchDestroy(); 
         }
 
 

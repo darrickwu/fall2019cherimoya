@@ -60,9 +60,12 @@ public class playermovement : MonoBehaviour
                 currentUnit++;
             }
 
-            player = UNITS.transform.GetChild(currentUnit).gameObject;
+            if (UNITS.transform.childCount > 0)
+            {
+                player = UNITS.transform.GetChild(currentUnit).gameObject;
+                moveRadius = UNITS.transform.GetChild(currentUnit).GetChild(0).gameObject;
+            }
             lastPosition = player.transform.position;
-            moveRadius = UNITS.transform.GetChild(currentUnit).GetChild(0).gameObject;
             player.transform.GetChild(0).gameObject.SetActive(true);
             player.transform.GetChild(1).gameObject.SetActive(true);
             manager.switchChar = false;

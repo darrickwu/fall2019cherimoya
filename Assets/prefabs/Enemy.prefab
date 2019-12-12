@@ -387,8 +387,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   health: 50
-  accuracy: 65
-  weaponDamage: 50
+  accuracy: 60
+  weaponDamage: 9
   evasion: 10
   isEnemy: 1
   manager: {fileID: 0}
