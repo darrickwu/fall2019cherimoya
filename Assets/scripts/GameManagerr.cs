@@ -39,7 +39,7 @@ public class GameManagerr : MonoBehaviour
     //DELETE THIS
     public GameObject temporarySpot;
     private bool waiting = false;
-    //
+  
 
     //ENEMY UNITS
     public GameObject allPlayerUnits;
@@ -51,6 +51,12 @@ public class GameManagerr : MonoBehaviour
     private bool didIWin = false;
     private int counter = 0;
 
+    public bool switchAction = false;
+    public bool switchChar = false;
+    public bool switchAlly = false;
+    private bool destroying = false;
+
+    private int stuck = 0;
     // Start is called before the first frame 
     void Start()
     {
@@ -93,7 +99,7 @@ public class GameManagerr : MonoBehaviour
         if (gameOver)
         {
             counter++;
-            if(counter >= 244)
+            if (counter >= 240)
             {
                 endGame(didIWin);
             }
@@ -108,22 +114,31 @@ public class GameManagerr : MonoBehaviour
         //Perform AI Action and set player turn again
         if (!get_turn() && !waiting)
         {
+            if (!performedAction)
+            {
+                Decision_Tree();
 
-            Decision_Tree();
+            }
 
             if (moveDone)
             {
-                //Debug.Log("DONE");
-                //dont shoot if low health
-                //fix this later
-                if (enemyStats.health > 10)
+
+                RaycastHit hitPlayer;
+                if (enemy != null && Physics.Raycast(enemy.transform.position, (player.transform.position - enemy.transform.position), out hitPlayer, Mathf.Infinity))
                 {
-                    //Debug.Log("START SHOOTING");
-                    enemy.transform.LookAt(player.transform);
-                    ps.playParticle();
-                    performedAction = true;
-                    waiting = true;
-                    StartCoroutine(ExampleCoroutine());
+                    //i can see the player
+                    if (hitPlayer.collider.gameObject.layer == 11)
+                    {
+                        //Debug.Log("START SHOOTING");
+                        enemy.transform.LookAt(player.transform);
+                        ps.playParticle();
+                        float hitChance = enemyStats.accuracy - enemyStats.evasion;
+                        bool RNGSuccess = Random.Range(0.0f, 101.0f) <= hitChance;
+                        if (RNGSuccess)
+                        {
+                            playerStats.takeDamage(enemyStats.weaponDamage);
+                        }
+                    }
 
                 }
                 performedAction = false;
@@ -136,6 +151,15 @@ public class GameManagerr : MonoBehaviour
                 if (enemy != null)
                 {
                     AI_Move();
+                    if (enemy.transform.position == lastPosition)
+                    {
+                        stuck++;
+                        if (stuck >= 240)
+                        {
+                            moveDone = true;
+                            StartCoroutine(ExampleCoroutine());
+                        }
+                    }
                 }
             }
         }
@@ -235,7 +259,6 @@ public class GameManagerr : MonoBehaviour
         RaycastHit hitPlayer;
         if (!performedAction && enemy != null && Physics.Raycast(enemy.transform.position, (player.transform.position - enemy.transform.position), out hitPlayer, Mathf.Infinity))
         {
-
             //i can see the player
             if (hitPlayer.collider.gameObject.layer == 11)
             {
@@ -281,6 +304,12 @@ public class GameManagerr : MonoBehaviour
                     //Debug.Log("START SHOOTING");
                     enemy.transform.LookAt(player.transform);
                     ps.playParticle();
+                    float hitChance = enemyStats.accuracy - enemyStats.evasion;
+                    bool RNGSuccess = Random.Range(0.0f, 101.0f) <= hitChance;
+                    if (RNGSuccess)
+                    {
+                        playerStats.takeDamage(enemyStats.weaponDamage);
+                    }
                     performedAction = true;
                     waiting = true;
                     StartCoroutine(ExampleCoroutine());
@@ -324,6 +353,32 @@ public class GameManagerr : MonoBehaviour
         }
     }
 
+    public void switchStats()
+    {
+        destroying = true;
+        if (pathfinder.seeker.gameObject == player && playerUnits.Count > 1)
+        {
+            switchAction = true;
+            switchChar = true;
+            switchAlly = true;
+        }
+        else
+        {
+            switchDestroy();
+        }
+    }
+
+    public void switchDestroy()
+    {
+        if (!switchAction && !switchAlly && !switchChar && destroying)
+        {
+            playerUnits.Remove(player);
+            Destroy(player);
+            checkForWin();
+            destroying = false;
+        }
+    }
+
     IEnumerator ExampleCoroutine()
     {
         //Debug.Log("Started Coroutine at timestamp : " + Time.time);
@@ -331,6 +386,7 @@ public class GameManagerr : MonoBehaviour
         yield return new WaitForSeconds(2);
         //end turn
         waiting = false;
+        stuck = 0;
         set_turn(true);
         //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }

@@ -35,7 +35,7 @@ public class AlliedAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("next") && !actionTime && moveDone && manager.get_turn())
+        if ((Input.GetButtonDown("next") && !actionTime && moveDone && manager.get_turn()) || (manager.switchAlly))
         {
             //print("CHANGING ACTION");
             if (currentUnit == UNITS.transform.childCount - 1)
@@ -51,6 +51,8 @@ public class AlliedAI : MonoBehaviour
             yourStats = unit.GetComponent<UnitStats>();
             svd = unit.transform.GetChild(2).gameObject;
             ps = svd.GetComponent<PlayParticle>();
+            manager.switchAlly = false;
+            manager.switchDestroy();
             return;
         }
 

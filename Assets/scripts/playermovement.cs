@@ -39,14 +39,14 @@ public class playermovement : MonoBehaviour
     void Update()
     {
 
-        if (manager.get_turn() && playerActionDone)
+        if (manager.get_turn() && playerActionDone && moveRadius != null)
         {
             moveRadius.SetActive(true);
         }
 
-        if (Input.GetButtonDown("next") && moveDone && manager.get_turn() && playerActionDone)
+        if ((Input.GetButtonDown("next") && moveDone && manager.get_turn() && playerActionDone) || (manager.switchChar))
         {
-           // print("CHANGING MOVEMENT");
+            // print("CHANGING MOVEMENT");
 
             player.transform.GetChild(0).gameObject.SetActive(false);
             player.transform.GetChild(1).gameObject.SetActive(false);
@@ -65,6 +65,8 @@ public class playermovement : MonoBehaviour
             moveRadius = UNITS.transform.GetChild(currentUnit).GetChild(0).gameObject;
             player.transform.GetChild(0).gameObject.SetActive(true);
             player.transform.GetChild(1).gameObject.SetActive(true);
+            manager.switchChar = false;
+            manager.switchDestroy();
             return;
         }
 

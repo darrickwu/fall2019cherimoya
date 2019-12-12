@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
-
+    public GameManagerr manager;
     public Transform seeker, target;
    // public Vector3 pt;
     Grid grid;
@@ -27,7 +27,7 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("next") && !findingPath && moveDone && !actionTime)
+        if ((Input.GetButtonDown("next") && !findingPath && moveDone && !actionTime) || (manager.switchAction))
         {
             //print("CHANGING PATH");
 
@@ -41,6 +41,8 @@ public class Pathfinding : MonoBehaviour
             }
 
             seeker = UNITS.transform.GetChild(currentUnit);
+            manager.switchAction = false;
+            manager.switchDestroy();
         }
 
 

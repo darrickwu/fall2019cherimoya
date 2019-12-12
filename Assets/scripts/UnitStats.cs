@@ -32,13 +32,16 @@ public class UnitStats : MonoBehaviour
             if (isEnemy)
             {
                 manager.enemyUnits.Remove(this.transform.gameObject);
+                Destroy(this.transform.gameObject);
+                manager.checkForWin();
             }
             else
             {
-                manager.playerUnits.Remove(this.transform.gameObject);
+                manager.switchStats();
+                Debug.Log(manager.switchAction);
+                Debug.Log(manager.switchAlly);
+                Debug.Log(manager.switchChar);
             }
-            Destroy(this.transform.gameObject);
-            manager.checkForWin();
         }
     }
 

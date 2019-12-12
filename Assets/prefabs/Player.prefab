@@ -672,9 +672,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 50
   health: 50
-  accuracy: 100
+  accuracy: 75
   weaponDamage: 10
-  evasion: 0
+  evasion: 10
+  isEnemy: 0
   manager: {fileID: 0}
   healthBar: {fileID: 3129753658451446584}
   enemyUI: {fileID: 3129753657379801635}
