@@ -14,10 +14,9 @@ public class AlliedAI : MonoBehaviour
     public GameObject svd;
     private PlayParticle ps;
     private GameObject unit;
-
     private GameObject UNITS;
     private int currentUnit = 0;
-
+    private bool moveDone;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +26,13 @@ public class AlliedAI : MonoBehaviour
         playerMove = logicManage.GetComponent<playermovement>();
         ps = svd.GetComponent<PlayParticle>();
         unit = UNITS.transform.GetChild(0).gameObject;
+        moveDone = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("next"))
+        if (Input.GetButtonDown("next") && !actionTime && moveDone && manager.get_turn())
         {
             if (currentUnit == UNITS.transform.childCount - 1)
             {
@@ -51,7 +51,7 @@ public class AlliedAI : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("prev"))
+        if (Input.GetButtonDown("prev") && !actionTime && moveDone && manager.get_turn())
         {
 
             if (currentUnit == 0)
@@ -73,10 +73,11 @@ public class AlliedAI : MonoBehaviour
 
         //right click to shoot at target
 
-        if (actionTime) {
+        if (actionTime)
+        {
             if (Input.GetButtonDown("Fire2"))
             {
-                
+
                 RaycastHit hit;
 
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
@@ -98,14 +99,14 @@ public class AlliedAI : MonoBehaviour
                                 //Debug.Log(ps);
                                 ps.playParticle();
                                 //wait after shooting
-                                
+
                                 enemyStats = tgt.GetComponent<UnitStats>();
                                 float hitChance = yourStats.accuracy - enemyStats.evasion;
                                 bool RNGSuccess = Random.Range(0.0f, 101.0f) <= hitChance;
                                 //Debug.Log("hit chance is " + hitChance);
                                 if (RNGSuccess)
                                 {
-                                   // Debug.Log("you hit the enemy for " + yourStats.weaponDamage + " damage.");
+                                    // Debug.Log("you hit the enemy for " + yourStats.weaponDamage + " damage.");
                                     enemyStats.takeDamage(yourStats.weaponDamage);
                                     //Debug.Log("enemey health is " + enemyStats.health);
                                 }
@@ -114,11 +115,9 @@ public class AlliedAI : MonoBehaviour
                                 StartCoroutine(ExampleCoroutine());
                             }
                         }
-                            //rotate the player to shoot at the enemy
-                            //calculate hit chance
-                            //shoot
-                            
-                        
+                        //rotate the player to shoot at the enemy
+                        //calculate hit chance
+                        //shoot
                     }
 
                 }
@@ -132,11 +131,16 @@ public class AlliedAI : MonoBehaviour
         }
     }
 
-    public void alliedAction() {
+    public void alliedAction()
+    {
         actionTime = true;
+        moveDone = true;
     }
 
-
+    public void setMove()
+    {
+        moveDone = false;
+    }
     IEnumerator ExampleCoroutine()
     {
         //Debug.Log("Started Coroutine at timestamp : " + Time.time);
@@ -147,7 +151,7 @@ public class AlliedAI : MonoBehaviour
         manager.set_turn(false);
         //prevent second move (left click)
         playerMove.playerActionDone = true;
-       
+
         //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
 }

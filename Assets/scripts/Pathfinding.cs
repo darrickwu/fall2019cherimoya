@@ -10,15 +10,22 @@ public class Pathfinding : MonoBehaviour
     Grid grid;
     public GameObject UNITS;
     private int currentUnit = 0;
+    private bool findingPath;
+    private bool moveDone;
 
     void Awake()
     {
         grid = GetComponent<Grid>();
     }
 
+    void Start()
+    {
+        findingPath = false;   
+    }
+
     private void Update()
     {
-        if (Input.GetButtonDown("next"))
+        if (Input.GetButtonDown("next") && !findingPath && moveDone)
         {
             if (currentUnit == UNITS.transform.childCount - 1)
             {
@@ -33,7 +40,7 @@ public class Pathfinding : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("prev"))
+        if (Input.GetButtonDown("prev") && !findingPath && moveDone)
         {
 
             if (currentUnit == 0)
@@ -51,9 +58,15 @@ public class Pathfinding : MonoBehaviour
 
     }
 
+    public void setDone(bool choice)
+    {
+        moveDone = choice;
+    }
+
     //some actual a* stuff
     public void FindPath(Vector3 startPos, Vector3 targetPos)
     {
+        findingPath = true;
         Node startNode = grid.NodeFromWorldPoint(startPos);
         Node targetNode = grid.NodeFromWorldPoint(targetPos);
         List<Node> openSet = new List<Node>();
@@ -121,14 +134,9 @@ public class Pathfinding : MonoBehaviour
             path.Add(currentNode);
             currentNode = currentNode.parent;
         }
-        path.Reverse();
-
-        //TEST
-        
+        path.Reverse();        
         grid.path = path;
-
-        
-        //TEST
+        findingPath = false;
     }
 
     //costs 14 to go diagonal 10 to gup up down left right

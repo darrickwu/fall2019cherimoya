@@ -112,6 +112,16 @@ public class playermovement : MonoBehaviour
 
         }
 
+        //move to the clicked location
+        if (Input.GetButtonDown("Fire2") && moveDone && manager.get_turn() && playerActionDone)
+        {
+            moveDone = true;
+            performedAction = true;
+            playerActionDone = false;
+            moveRadius.SetActive(false);
+            distanceTraveled = 0.0f;
+        }
+
         if (performedAction && moveDone)
         {
             //shoot/ability/etc.
@@ -121,8 +131,10 @@ public class playermovement : MonoBehaviour
         }
 
         //actually move the unit
-        if (waypointCurrent != null)
+        if (waypointCurrent != null && !moveDone)
         {
+            alliedAI.setMove();
+            pathfinder.setDone(false);
             pathfinder.seeker.transform.position = Vector3.MoveTowards(pathfinder.seeker.transform.position, waypointCurrent.worldPosition, .1f);
             //get to the next waypoint if it is in bounds
             distanceTraveled += Vector3.Distance(player.transform.position, lastPosition);
@@ -147,6 +159,7 @@ public class playermovement : MonoBehaviour
                 {
                     waypointCurrent = null;
                     moveDone = true;
+                    pathfinder.setDone(true);
                     distanceTraveled = 0.0f;
                 }
 

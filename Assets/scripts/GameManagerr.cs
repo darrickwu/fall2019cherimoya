@@ -42,10 +42,10 @@ public class GameManagerr : MonoBehaviour
     //
 
     //ENEMY UNITS
+    public GameObject allPlayerUnits;
     public GameObject allEnemyUnits;
     private List<GameObject> enemyUnits;
-    private Random rand = new Random();
-
+    private List<GameObject> playerUnits;    
 
     // Start is called before the first frame 
     void Start()
@@ -63,9 +63,14 @@ public class GameManagerr : MonoBehaviour
 
         coverList = new List<GameObject>();
         enemyUnits = new List<GameObject>();
+        playerUnits = new List<GameObject>();
 
+        for (int i = 0; i < allPlayerUnits.transform.childCount; i++)
+        {
+            playerUnits.Add(allPlayerUnits.transform.GetChild(i).gameObject);
+        }
 
-        for(int i = 0; i < allEnemyUnits.transform.childCount; i++)
+        for (int i = 0; i < allEnemyUnits.transform.childCount; i++)
         {
             enemyUnits.Add(allEnemyUnits.transform.GetChild(i).gameObject);
         }
@@ -201,9 +206,11 @@ public class GameManagerr : MonoBehaviour
         if (!performedAction)
         {
             enemy = enemyUnits[Random.Range(0, enemyUnits.Count)];
+            player = playerUnits[Random.Range(0, playerUnits.Count)];
             lastPosition = enemy.transform.position;
             enemyWeapon = enemy.transform.GetChild(0).gameObject;
             ps = enemyWeapon.GetComponent<PlayParticle>();
+
         }
 
         RaycastHit hitPlayer;
