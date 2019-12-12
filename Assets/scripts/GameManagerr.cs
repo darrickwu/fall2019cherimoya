@@ -297,6 +297,16 @@ public class GameManagerr : MonoBehaviour
 
                     //Debug.Log("MOVING");
                     //Debug.Log(closestObj.transform);
+
+                    foreach(GameObject obj in enemyUnits)
+                    {
+                        if(obj.transform.position.x - closestObj.transform.position.x < 2.0f && obj.transform.position.z - closestObj.transform.position.z < 2.0f)
+                        {
+                            closestObj = player;
+                            break;
+                        }
+                    }
+
                     AI_To_Dest(closestObj);
                 }
                 else
