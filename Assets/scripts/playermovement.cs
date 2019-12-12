@@ -103,8 +103,6 @@ public class playermovement : MonoBehaviour
                     performedAction = true;
                     playerActionDone = false;
                     moveRadius.SetActive(false);
-                    Debug.Log(distanceTraveled);
-
                     distanceTraveled = 0.0f;
                 }
 
@@ -130,7 +128,6 @@ public class playermovement : MonoBehaviour
 
             if (distanceTraveled >= maxDistance)
             {
-                Debug.Log(distanceTraveled);
                 index = waypoints.Count;
                 distanceTraveled = 0.0f;
             }
