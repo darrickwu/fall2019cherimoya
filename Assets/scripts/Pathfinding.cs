@@ -12,7 +12,7 @@ public class Pathfinding : MonoBehaviour
     private int currentUnit = 0;
     private bool findingPath;
     private bool moveDone;
-
+    private bool actionTime;
     void Awake()
     {
         grid = GetComponent<Grid>();
@@ -20,13 +20,17 @@ public class Pathfinding : MonoBehaviour
 
     void Start()
     {
-        findingPath = false;   
+        findingPath = false;
+        moveDone = true;
+        actionTime = false;
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("next") && !findingPath && moveDone)
+        if (Input.GetButtonDown("next") && !findingPath && moveDone && !actionTime)
         {
+            //print("CHANGING PATH");
+
             if (currentUnit == UNITS.transform.childCount - 1)
             {
                 currentUnit = 0;
@@ -40,8 +44,9 @@ public class Pathfinding : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("prev") && !findingPath && moveDone)
+        if (Input.GetButtonDown("prev") && !findingPath && moveDone && !actionTime)
         {
+            //print("CHANGING PATH");
 
             if (currentUnit == 0)
             {
@@ -61,6 +66,11 @@ public class Pathfinding : MonoBehaviour
     public void setDone(bool choice)
     {
         moveDone = choice;
+    }
+
+    public void setAction(bool choice)
+    {
+        actionTime = choice;
     }
 
     //some actual a* stuff

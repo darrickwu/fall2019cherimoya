@@ -12,7 +12,7 @@ public class playermovement : MonoBehaviour
     private Node waypointCurrent;
     private int index = 0;
     private bool moveDone = true;
-    private bool performedAction = true;
+    private bool performedAction = false;
     public bool playerActionDone = true;
 
     private float distanceTraveled;
@@ -46,6 +46,8 @@ public class playermovement : MonoBehaviour
 
         if (Input.GetButtonDown("next") && moveDone && manager.get_turn() && playerActionDone)
         {
+           // print("CHANGING MOVEMENT");
+
             player.transform.GetChild(0).gameObject.SetActive(false);
             player.transform.GetChild(1).gameObject.SetActive(false);
 
@@ -69,6 +71,8 @@ public class playermovement : MonoBehaviour
 
         if (Input.GetButtonDown("prev") && moveDone && manager.get_turn() && playerActionDone)
         {
+            //print("CHANGING MOVEMENT");
+
             player.transform.GetChild(0).gameObject.SetActive(false);
             player.transform.GetChild(1).gameObject.SetActive(false);
 
@@ -160,6 +164,7 @@ public class playermovement : MonoBehaviour
                     waypointCurrent = null;
                     moveDone = true;
                     pathfinder.setDone(true);
+                    pathfinder.setAction(true);
                     distanceTraveled = 0.0f;
                 }
 

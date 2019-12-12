@@ -1646,6 +1646,7 @@ MonoBehaviour:
   manager: {fileID: 1561275054}
   logicManage: {fileID: 1157570448}
   svd: {fileID: 724266115}
+  aStaar: {fileID: 397282382}
 --- !u!1001 &1060242877
 PrefabInstance:
   m_ObjectHideFlags: 0

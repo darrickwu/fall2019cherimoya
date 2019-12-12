@@ -17,11 +17,14 @@ public class AlliedAI : MonoBehaviour
     private GameObject UNITS;
     private int currentUnit = 0;
     private bool moveDone;
+    public GameObject aStaar;
+    private Pathfinding pathfinder;
     // Start is called before the first frame update
     void Start()
     {
         UNITS = this.transform.gameObject;
         actionTime = false;
+        pathfinder = aStaar.GetComponent<Pathfinding>();
         yourStats = transform.GetChild(0).gameObject.GetComponent<UnitStats>();
         playerMove = logicManage.GetComponent<playermovement>();
         ps = svd.GetComponent<PlayParticle>();
@@ -34,6 +37,7 @@ public class AlliedAI : MonoBehaviour
     {
         if (Input.GetButtonDown("next") && !actionTime && moveDone && manager.get_turn())
         {
+            //print("CHANGING ACTION");
             if (currentUnit == UNITS.transform.childCount - 1)
             {
                 currentUnit = 0;
@@ -53,6 +57,7 @@ public class AlliedAI : MonoBehaviour
 
         if (Input.GetButtonDown("prev") && !actionTime && moveDone && manager.get_turn())
         {
+            //print("CHANGING ACTION");
 
             if (currentUnit == 0)
             {
@@ -124,6 +129,7 @@ public class AlliedAI : MonoBehaviour
             }
             if (Input.GetButtonDown("Jump"))
             {
+                pathfinder.setAction(false);
                 manager.set_turn(false);
                 actionTime = false;
                 playerMove.playerActionDone = true;
@@ -149,6 +155,7 @@ public class AlliedAI : MonoBehaviour
         yield return new WaitForSeconds(2);
         //end turn
         manager.set_turn(false);
+        pathfinder.setAction(false);
         //prevent second move (left click)
         playerMove.playerActionDone = true;
 
