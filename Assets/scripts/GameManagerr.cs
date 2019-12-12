@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class GameManagerr : MonoBehaviour
@@ -37,6 +38,7 @@ public class GameManagerr : MonoBehaviour
 
     //DELETE THIS
     public GameObject temporarySpot;
+    private bool waiting = false;
     //
 
     //ENEMY UNITS
@@ -82,31 +84,34 @@ public class GameManagerr : MonoBehaviour
         playerCanvas.SetActive(get_turn());
         enemyCanvas.SetActive(!get_turn());
         //Perform AI Action and set player turn again
-        if (!get_turn())
+        if (!get_turn() && !waiting)
         {
 
             Decision_Tree();
-         
+
             if (moveDone)
             {
                 //Debug.Log("DONE");
                 //dont shoot if low health
                 //fix this later
-                if (enemyStats.health > 10) 
+                if (enemyStats.health > 10)
                 {
                     //Debug.Log("START SHOOTING");
                     enemy.transform.LookAt(player.transform);
                     ps.playParticle();
                     performedAction = true;
+                    waiting = true;
                     StartCoroutine(ExampleCoroutine());
 
                 }
-                set_turn(true);
                 performedAction = false;
+                waiting = true;
+                StartCoroutine(ExampleCoroutine());
+
             }
             else
             {
-                if(enemy != null)
+                if (enemy != null)
                 {
                     AI_Move();
                 }
@@ -259,6 +264,7 @@ public class GameManagerr : MonoBehaviour
                     enemy.transform.LookAt(player.transform);
                     ps.playParticle();
                     performedAction = true;
+                    waiting = true;
                     StartCoroutine(ExampleCoroutine());
                     //no cover found, start shooting
                 }
@@ -278,8 +284,9 @@ public class GameManagerr : MonoBehaviour
     {
         //Debug.Log("Started Coroutine at timestamp : " + Time.time);
         //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         //end turn
+        waiting = false;
         set_turn(true);
         //Debug.Log("Finished Coroutine at timestamp : " + Time.time);
     }
