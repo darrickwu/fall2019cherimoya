@@ -12,12 +12,16 @@ public class UnitStats : MonoBehaviour
     public float weaponDamage;
     public float evasion;
 
+    public bool isEnemy;
+    public GameManagerr manager;
+
     public Image healthBar;
     public GameObject enemyUI;
     private GameObject cameraTgt;
     private Vector3 TargetCamPosition;
     private void Start()
     {
+        manager = GameObject.Find("/GameManagerr").GetComponent<GameManagerr>();
         health = maxHealth;
         cameraTgt = Camera.main.gameObject;
     }
@@ -25,8 +29,16 @@ public class UnitStats : MonoBehaviour
     {
         if (health <= 0.0f)
         {
-            Destroy(this.gameObject);
-            //SceneManager.LoadScene(sceneName: "End");
+            if (isEnemy)
+            {
+                manager.enemyUnits.Remove(this.transform.gameObject);
+            }
+            else
+            {
+                manager.playerUnits.Remove(this.transform.gameObject);
+            }
+            Destroy(this.transform.gameObject);
+            manager.checkForWin();
         }
     }
 

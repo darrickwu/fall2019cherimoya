@@ -705,6 +705,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8051931962025698695, guid: c80ebf9a205191b4eb0564b4267845ee,
+        type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c80ebf9a205191b4eb0564b4267845ee, type: 3}
 --- !u!4 &442283604 stripped
@@ -2135,6 +2140,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8051931962025698695, guid: c80ebf9a205191b4eb0564b4267845ee,
+        type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c80ebf9a205191b4eb0564b4267845ee, type: 3}
 --- !u!4 &1429430414 stripped
@@ -2420,6 +2430,8 @@ MonoBehaviour:
   temporarySpot: {fileID: 1479962525}
   allPlayerUnits: {fileID: 1057862047}
   allEnemyUnits: {fileID: 252880151}
+  enemyUnits: []
+  playerUnits: []
 --- !u!4 &1561275055
 Transform:
   m_ObjectHideFlags: 0
@@ -2890,6 +2902,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8051931962025698695, guid: c80ebf9a205191b4eb0564b4267845ee,
+        type: 3}
+      propertyPath: maxHealth
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8051931960859937838, guid: c80ebf9a205191b4eb0564b4267845ee,
         type: 3}

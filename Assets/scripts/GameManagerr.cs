@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManagerr : MonoBehaviour
 {
@@ -44,8 +44,12 @@ public class GameManagerr : MonoBehaviour
     //ENEMY UNITS
     public GameObject allPlayerUnits;
     public GameObject allEnemyUnits;
-    private List<GameObject> enemyUnits;
-    private List<GameObject> playerUnits;    
+    public List<GameObject> enemyUnits;
+    public List<GameObject> playerUnits;
+
+    private bool gameOver = false;
+    private bool didIWin = false;
+    private int counter = 0;
 
     // Start is called before the first frame 
     void Start()
@@ -56,9 +60,8 @@ public class GameManagerr : MonoBehaviour
         localGrid = gridClass.grid;
 
         playerStats = player.GetComponent<UnitStats>();
-
-
         enemyStats = enemy.GetComponent<UnitStats>();
+
         ps = enemyWeapon.GetComponent<PlayParticle>();
 
         coverList = new List<GameObject>();
@@ -76,7 +79,7 @@ public class GameManagerr : MonoBehaviour
         }
 
 
-        for(int i = 0; i < allCover.transform.childCount; i++)
+        for (int i = 0; i < allCover.transform.childCount; i++)
         {
             coverList.Add(allCover.transform.GetChild(i).gameObject);
         }
@@ -86,6 +89,20 @@ public class GameManagerr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (gameOver)
+        {
+            counter++;
+            if(counter >= 244)
+            {
+                endGame(didIWin);
+            }
+            else
+            {
+                return;
+            }
+        }
+
         playerCanvas.SetActive(get_turn());
         enemyCanvas.SetActive(!get_turn());
         //Perform AI Action and set player turn again
@@ -124,7 +141,7 @@ public class GameManagerr : MonoBehaviour
         }
     }
 
-    public  bool get_turn()
+    public bool get_turn()
     {
         return playerTurn;
     }
@@ -147,10 +164,10 @@ public class GameManagerr : MonoBehaviour
         waypoints = gridClass.path;
         if (waypoints != null)
         {
-            if(waypoints.Count > 0)
+            if (waypoints.Count > 0)
                 waypointCurrent = waypoints[0];
         }
-        
+
         performedAction = true;
     }
 
@@ -206,7 +223,9 @@ public class GameManagerr : MonoBehaviour
         if (!performedAction)
         {
             enemy = enemyUnits[Random.Range(0, enemyUnits.Count)];
+            enemyStats = enemy.GetComponent<UnitStats>();
             player = playerUnits[Random.Range(0, playerUnits.Count)];
+            playerStats = player.GetComponent<UnitStats>();
             lastPosition = enemy.transform.position;
             enemyWeapon = enemy.transform.GetChild(0).gameObject;
             ps = enemyWeapon.GetComponent<PlayParticle>();
@@ -216,14 +235,6 @@ public class GameManagerr : MonoBehaviour
         RaycastHit hitPlayer;
         if (!performedAction && enemy != null && Physics.Raycast(enemy.transform.position, (player.transform.position - enemy.transform.position), out hitPlayer, Mathf.Infinity))
         {
-
-            if (enemyStats.health <= 10)
-            {
-                //flee
-                AI_To_Dest(temporarySpot);
-                
-                return;
-            }
 
             //i can see the player
             if (hitPlayer.collider.gameObject.layer == 11)
@@ -256,7 +267,7 @@ public class GameManagerr : MonoBehaviour
 
                     closestObj = child0.gameObject;
 
-                    if(dist < Vector3.Distance(child1.position, player.transform.position))
+                    if (dist < Vector3.Distance(child1.position, player.transform.position))
                     {
                         closestObj = child1.gameObject;
                     }
@@ -275,7 +286,7 @@ public class GameManagerr : MonoBehaviour
                     StartCoroutine(ExampleCoroutine());
                     //no cover found, start shooting
                 }
-         
+
             }
             //i cannot see the player so i move towards players location
             else
@@ -287,11 +298,37 @@ public class GameManagerr : MonoBehaviour
 
     }
 
+    public void checkForWin()
+    {
+        if (enemyUnits.Count == 0)
+        {
+            gameOver = true;
+            didIWin = true;
+        }
+        else if (playerUnits.Count == 0)
+        {
+            gameOver = true;
+            didIWin = false;
+        }
+    }
+
+    private void endGame(bool playerWin)
+    {
+        if (playerWin)
+        {
+            SceneManager.LoadScene(sceneName: "Win");
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneName: "Lose");
+        }
+    }
+
     IEnumerator ExampleCoroutine()
     {
         //Debug.Log("Started Coroutine at timestamp : " + Time.time);
         //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         //end turn
         waiting = false;
         set_turn(true);
