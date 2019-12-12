@@ -196,7 +196,7 @@ public class GameManagerr : MonoBehaviour
         RaycastHit hitPlayer;
         if (!performedAction && enemy != null && Physics.Raycast(enemy.transform.position, (player.transform.position - enemy.transform.position), out hitPlayer, Mathf.Infinity))
         {
-            enemy = enemyUnits.ToArray()[Random.Range(0, 8)];
+            enemy = enemyUnits[Random.Range(0, enemyUnits.Count)];
             enemyWeapon = enemy.transform.GetChild(0).gameObject;
             ps = enemyWeapon.GetComponent<PlayParticle>();
 
